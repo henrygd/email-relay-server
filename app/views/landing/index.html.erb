@@ -1,0 +1,102 @@
+<div class="head">
+  <h1 class="logo">Email Relay Server</h1>
+  <p>Free emails for static sites | Limited to 45 per week</p>
+  <a class="github" href="https://github.com/henrygd/email-relay-server">View on Github</a>
+</div>
+
+<div class="main">
+  <div class="options">
+    <div id="result_holder">
+      <h4 class="instructions">Enter your email to generate key or check status</h4>
+    </div>
+    <div class="button-div">
+      <% flash.each do |message_type, message| %>
+        <%= content_tag(:div, message, class: "alert-#{message_type}") %>
+      <% end %>
+      <%= form_for(:key, :url => keys_path, :method => :post, :remote => true) do |f| %>
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %> 
+        <div class="input-wrapper">
+          <i></i>
+          <%= f.email_field :email, placeholder: 'Email' %>
+        </div>
+        <%= content_tag :button, 'Submit', :type => :submit, class: 'option-button', id: 'submit_button' %>
+      <% end %>
+    </div>
+  </div>
+  <div id="static_contact_form"></div>
+
+<p style="margin-top:0">The server uses JSONP to circumvent cross-domain AJAX limitations. To make a request, point the <code>src</code> attribute of a script tag to <code>emailrelay.henrygd.me/sendmail</code>, with the proper parameters included in the url. You must have a <code>callback</code> param, which is the function used to process the returned JSON object.</p>
+<p>In the example below, the returned data is passed to the function <code>processResponse</code> to do the work. Some JavaScript libraries (like jQuery) have built-in methods for JSONP, so check the docs if you want to use that. Alternatively, I have a ready made form with baked-in support <a href="https://henrygd.me/static-contact-form">available here</a>.</p>
+
+<pre>
+<code data-language="javascript">
+function sendEmail(key, email, fromEmail, name, message, subject, phone) {
+  var url = 'https://emailrelay.henrygd.me/sendmail' +
+              // your key
+              '?key=' + key +
+              // your email
+              '&email=' + encodeURIComponent(email) +
+              // sender's email (max 255 characters)
+              '&fromEmail=' + encodeURIComponent(fromEmail) +
+              // sender's name (max 255 characters)
+              '&name=' + encodeURIComponent(name) +
+              // message body (max 10000 characters)
+              '&message=' + encodeURIComponent(message) +
+              // Optional email subject (max 400 characters)
+              '&subject=' + encodeURIComponent(subject) +
+              // Optional phone number (max 50 characters)
+              '&phone=' + encodeURIComponent(phone) +
+              // callback function (max 255 characters)
+              '&callback=processResponse';
+  var script = document.createElement('script');
+  script.onerror = function() {
+    console.log('error');
+  };
+  script.src = url;
+  document.body.appendChild(script);
+}
+
+// function we passed in is automatically called upon receiving json response
+window.processResponse = function(data) {
+  if (data.sent)
+    console.log("Success: " + data.remaining + " sends remaining");
+  else
+    console.log("Error: " + data.message)
+}
+</code>
+</pre>
+
+<table>
+  <thead>
+    <tr>
+      <th>EXAMPLE CASE</th>
+      <th>JSON RESPONSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><p style="color:#2FD14C">Successful send</p></td>
+      <td><p>{"sent": true, "remaining": 44}</p></td>
+    </tr>
+    <tr>
+      <td><p>Missing parameter</p></td>
+      <td><p>{"sent": false, "message": "Missing name parameter"}</p></td>
+    </tr>
+    <tr>
+      <td><p>Email / key mismatch</p></td>
+      <td><p>{"sent": false, "message": "Email and key do not match"}</p></td>
+    </tr>
+    <tr>
+      <td><p>Param exceeds length limit</p></td>
+      <td><p>{"sent": false, "message": "Message is too long"}</p></td>
+    </tr>
+    <tr>
+      <td><p>Exceeded weekly limit</p></td>
+      <td><p>{"sent": false, "message": "You have reached the weekly limit"}</p></td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="note">Note: All emails are sent from mailer@emailrelay.henrygd.me. The reply-to header field will contain the sender's address, so please reply directly. No mail content or personal information is stored on this server. Numbers reset every Sunday at 12 AM (ET).</p>
+
+</div>

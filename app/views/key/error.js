@@ -1,0 +1,1 @@
+ERS.displayResult('<h4 style="color:#FC3030">ERROR: Please check input</h4>');

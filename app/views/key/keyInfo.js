@@ -1,0 +1,1 @@
+ERS.displayResult('<h4>Key for <%= @key.email %>: <code><%= @key.key %></code></h4><p>Sends this week: <b><%= @key.sends_week %></b> | Total sends: <b><%= @key.sends_all %></b></p>');
