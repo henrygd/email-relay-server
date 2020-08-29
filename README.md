@@ -1,3 +1,5 @@
+# Email relay functionality ending October 2020. Do not use.
+
 ## Email Relay Server
 
 45 free emails a week for static websites. Check the site for use instructions.
