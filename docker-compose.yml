@@ -3,7 +3,7 @@ version: '2'
 services:
    emailrelay:
      container_name: email-relay
-     image: ghcr.io/henrygd/email-relay-server:arm64
+     image: ghcr.io/henrygd/email-relay-server:amd64
      restart: unless-stopped
      ports:
        - '3000:3000'
