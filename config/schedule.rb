@@ -2,6 +2,7 @@
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
+set :job_template, "/bin/sh -l -c ':job'"
 
 every :sunday, :at => '12am' do
   runner "Key.update_all 'sends_week = 0'"

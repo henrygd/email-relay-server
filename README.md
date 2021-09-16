@@ -1,11 +1,13 @@
-# Email relay functionality ending October 2020. Do not use.
+# email relay server docker image
 
-## Email Relay Server
+## server config
 
-45 free emails a week for static websites. Check the site for use instructions.
+/assets should be served as static files. example config for nginx proxy manager below after bind mounting /public in a static volume so npm can serve it. use /etc/fstab to mount at startup.
 
-##### [https://emailrelay.henrygd.me](https://emailrelay.henrygd.me)
+`mount --bind path/to/public/folder /path/to/nginx/static/files/email-relay`
 
-If anyone wants to deploy the rails app on your own server, be sure to use [whenever](https://github.com/javan/whenever) to set the cronjob for clearing weekly email count. Email smtp config is in production.rb.
-
-License: MIT
+```
+location ~ ^/assets/ {
+    root /static/email-relay;
+}
+```

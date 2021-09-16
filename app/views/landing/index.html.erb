@@ -32,23 +32,23 @@
 <pre>
 <code data-language="javascript">
 function sendEmail(key, email, fromEmail, name, message, subject, phone) {
-  var url = 'https://emailrelay.henrygd.me/sendmail' +
-              // your key
-              '?key=' + key +
-              // your email
-              '&email=' + encodeURIComponent(email) +
-              // sender's email (max 255 characters)
-              '&fromEmail=' + encodeURIComponent(fromEmail) +
-              // sender's name (max 255 characters)
-              '&name=' + encodeURIComponent(name) +
-              // message body (max 10000 characters)
-              '&message=' + encodeURIComponent(message) +
-              // Optional email subject (max 400 characters)
-              '&subject=' + encodeURIComponent(subject) +
-              // Optional phone number (max 50 characters)
-              '&phone=' + encodeURIComponent(phone) +
-              // callback function (max 255 characters)
-              '&callback=processResponse';
+  var url = 'https://emailrelay.henrygd.me/sendmail?' +
+            // your key
+            'key=' + key +
+            // your email
+            '&email=' + encodeURIComponent(email) +
+            // sender's email (max 255 characters)
+            '&fromEmail=' + encodeURIComponent(fromEmail) +
+            // sender's name (max 255 characters)
+            '&name=' + encodeURIComponent(name) +
+            // message body (max 10000 characters)
+            '&message=' + encodeURIComponent(message) +
+            // Optional email subject (max 400 characters)
+            '&subject=' + encodeURIComponent(subject) +
+            // Optional phone number (max 50 characters)
+            '&phone=' + encodeURIComponent(phone) +
+            // callback function (max 255 characters)
+            '&callback=processResponse';
   var script = document.createElement('script');
   script.onerror = function() {
     console.log('error');
@@ -98,6 +98,6 @@ window.processResponse = function(data) {
   </tbody>
 </table>
 
-<p class="note">Note: All emails are sent from mailer@emailrelay.henrygd.me. The reply-to header field will contain the sender's address, so please reply directly. No mail content or personal information is stored on this server. Numbers reset every Sunday at 12 AM (ET).</p>
+<p class="note">Note: All emails are sent from emailrelay@henrygd.me. The reply-to header field will contain the sender's address, so please reply directly. No mail content or personal information is stored on this server. Numbers reset every Sunday at 12 AM (ET).</p>
 
 </div>

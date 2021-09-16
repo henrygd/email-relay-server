@@ -7,7 +7,7 @@ class RelayMailer < ApplicationMailer
     @id = params[:phone] ? "#{@name} (phone: #{params[:phone]})" : @name
     mail(to: params[:email],
          reply_to: "\"#{@name}\"<#{params[:fromEmail]}>",
-         from: "\"#{@name}\"<emailrelay@mailer.henrygd.me>",
+         from: "\"#{@name}\"<emailrelay@henrygd.me>",
          subject: params[:subject] || "New message on #{@site}")
   end
     

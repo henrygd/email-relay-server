@@ -21,9 +21,9 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: emailrelay
-  pool: 5
-  # <<: *default
-  # database: db/production.sqlite3
+  #adapter: postgresql
+  #encoding: unicode
+  #database: emailrelay
+  #pool: 5
+  <<: *default
+  database: db/production.sqlite3

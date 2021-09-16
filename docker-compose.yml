@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+   emailrelay:
+     container_name: email-relay
+     image: ghcr.io/henrygd/email-relay-server:arm64
+     restart: unless-stopped
+     ports:
+       - '3000:3000'
+     volumes:
+       - ./email-relay:/app/public
+     environment:
+      SMTP_HOST: "smtp.zoho.com"
+      SMTP_USERNAME: "user"
+      SMTP_PASSWORD: "pass"
+      SECRET_KEY_BASE: "e3a9fb34af15690a7e1a135f8991f8175fd92f40cffb38e3f77452b93204af87efed26b472eb437d195b85bc38f0dea471bb8be3788a3e5b89ada88953386f8e"
